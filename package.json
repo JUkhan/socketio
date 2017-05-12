@@ -10,7 +10,8 @@
   "author": "Jasim Khan",
   "license": "Apache",
   "dependencies": {
-    "express": "^4.9.0",
+    "cool-ascii-faces": "1.3.4",
+    "express": "^4.15.2",
     "lodash-node": "^2.4.1",
     "socket.io": "^2.0.1"
   }

@@ -1,15 +1,22 @@
+
+var cool = require('cool-ascii-faces');
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var _ = require('lodash-node');
-
+var port = process.env.PORT || 5000;
 var users = [];
-app.set('port', (process.env.PORT || 5000));
-app.get('/', function (req, res){
-  res.sendfile('index.html');
-});
 
-io.on('connection', function (socket) {
+app.get('/', function(req, res){
+  res.sendFile(__dirname + '/index.html');
+});
+app.get('/cool', function(request, response) {
+  response.send(cool());
+});
+io.on('connection', function(socket){
+  socket.on('chat message', function(msg){
+    io.emit('chat message', msg);
+  });
   socket.on('login', function (name) {
     // if this socket is already connected,
     // send a failed login message
@@ -57,9 +64,6 @@ io.on('connection', function (socket) {
   });
 });
 
-// http.listen(3000, function(){
-//   console.log('listening on *:3000');
-// });
-app.listen(app.get('port'), function() {
-  console.log('Node app is running on port', app.get('port'));
-});
+ http.listen(port, function(){
+   console.log('listening on *:' + port);
+ });
