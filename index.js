@@ -76,6 +76,9 @@ io.on('connection', function(socket){
   });
 });
 
- http.listen(port, function(){
+ var server=http.listen(port, function(){
    console.log('listening on *:' + port);
+    var host = server.address();
+    //var port = server.address().port;
+    console.log( host )
  });
