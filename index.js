@@ -11,11 +11,13 @@ var users = [];
 app.use(cors());
 
 app.get('/', function(req, res){
+  console.log('----------------------');
   res.sendFile(__dirname + '/index.html');
 });
 app.get('/cool', function(request, response) {
   response.send(cool());
 });
+
 io.on('connection', function(socket){
   socket.on('chat message', function(msg){
     console.log('message: '+ msg);
