@@ -4,11 +4,17 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var _ = require('lodash-node');
-var cors = require('cors');
+//var cors = require('cors');
 var port = process.env.PORT || 5000;
 var users = [];
 
-app.use(cors());
+//app.use(cors());
+app.use(function(req, res, next) {
+  console.log('---------cors------------');
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 app.get('/', function(req, res){
   console.log('----------------------');
