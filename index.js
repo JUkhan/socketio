@@ -18,6 +18,10 @@ app.use(function(req, res, next) {
 
 app.get('/', function(req, res){
   console.log('----------------------');
+ console.log('remoteAddress ',req.connection.remoteAddress);
+console.log('remotePort', req.connection.remotePort);
+console.log('localAddress', req.connection.localAddress);
+console.log('localPort', req.connection.localPort);
   res.sendFile(__dirname + '/index.html');
 });
 app.get('/cool', function(request, response) {
@@ -76,9 +80,6 @@ io.on('connection', function(socket){
   });
 });
 
- var server=http.listen(port, function(){
-   console.log('listening on *:' + port);
-    var host = server.address();
-    //var port = server.address().port;
-    console.log( host )
+ http.listen(port, function(){
+   console.log('listening on *:' + port);   
  });
