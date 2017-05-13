@@ -4,24 +4,25 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var _ = require('lodash-node');
-//var cors = require('cors');
+var cors = require('cors');
 var port = process.env.PORT || 5000;
 var users = [];
 
-//app.use(cors());
-app.use(function(req, res, next) {
-  console.log('---------cors------------');
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+app.use(cors());
+// app.use(function(req, res, next) {
+//   console.log('---------cors------------');
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   next();
+// });
 
 app.get('/', function(req, res){
   console.log('----------------------');
- console.log('remoteAddress ',req.connection.remoteAddress);
-console.log('remotePort', req.connection.remotePort);
-console.log('localAddress', req.connection.localAddress);
-console.log('localPort', req.connection.localPort);
+var ip = req.headers['x-forwarded-for'] || 
+     req.connection.remoteAddress || 
+     req.socket.remoteAddress ||
+     req.connection.socket.remoteAddress;
+     console.log(ip);
   res.sendFile(__dirname + '/index.html');
 });
 app.get('/cool', function(request, response) {
